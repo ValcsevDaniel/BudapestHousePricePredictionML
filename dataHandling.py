@@ -19,7 +19,14 @@ from sklearn.svm import SVC
 from sklearn.metrics import mean_absolute_percentage_error
 import numpy as np
 #Formatting the data
-dataset = pd.read_csv("Ingatlanok.csv")
+
+dataset = pd.read_csv("ZugloiIngatlanok.csv")
+dataset_5 = pd.read_csv("Ingatlanok3.csv")
+dataset = pd.concat([dataset,dataset_5],axis=0)
+#remove unneccessary data
+dataset = dataset.drop(['adress','Parkolóhely ára','Panelprogram'],axis=1)
+dateset = dataset.drop(dataset.columns[[0]], axis=1)
+
 HAS_ENCODING_FOR_AC = {
     "van" : True,
     "nincs" : False,
@@ -89,35 +96,12 @@ def Inner_Height_Parser(x):
         pass
 
 
-#dataset.rename(columns={'Belmagasság' : 'IsLessThan3Meters'}, inplace= True)
-#dataset['Lift'] = dataset['Lift'].map(HAS_ENCODING_FOR_ELEVATOR)
-dataset['Légkondicionáló'] = dataset['Légkondicionáló'].map(HAS_ENCODING_FOR_AC)
-dataset['Légkondicionáló'].fillna(False,inplace=True)
-dataset['Akadálymentesített'] = dataset['Akadálymentesített'].map(IS_ACCESIBBLE)
-dataset['Akadálymentesített'].fillna(False, inplace=True)
-#dataset['Parkolóhely ára']= dataset['Parkolóhely ára'].apply(lambda x : Parking_Parse(x))
-#dataset['Emelet']= dataset['Emelet'].apply(lambda x : Level_Parse(x))
-#dataset['Építés éve']= dataset['Építés éve'].apply(lambda x : Building_Year_Parse(x))
-#dataset['Épület szintjei']= dataset['Épület szintjei'].apply(lambda x : Building_Level_Parse(x))
-#dataset['Kertkapcsolatos']= dataset['Kertkapcsolatos'].map(IS_ACCESIBBLE)
-dataset['Szigetelés']= dataset['Szigetelés'].apply(lambda x : Isolation_Parse(x))
-median_value_szig = dataset['Szigetelés'].median()
-dataset['Szigetelés'].isna().sum()
-dataset['Szigetelés'].fillna(median_value_szig,inplace=True)
-dataset['Komfort'].fillna("összkomfortos",inplace=True)
-dataset["Ingatlan állapota"].fillna(method="ffill",inplace=True)
-#dataset['IsLessThan3Meters'] = dataset['IsLessThan3Meters'].apply(lambda x : Inner_Height_Parser(x))
-
-
-
-
-
-threshold = 200
+threshold = 0.01 * len(dataset)
 filtered_dataset = dataset.dropna(thresh=len(dataset) - threshold, axis=1)
 dataset = filtered_dataset
-# Print the columns in the filtered DataFrame
-print("Columns with less than 100 NaN values:")
-print(filtered_dataset.columns)
+dataset.drop(['Közös költség'], axis=1,inplace=True)
+dataset.dropna(inplace=True)
+
 
 obj = (dataset.dtypes == 'object')
 object_cols = list(obj[obj].index)
@@ -141,7 +125,7 @@ sns.heatmap(dataset[fl_cols].corr(),
 
 unique_values = []
 
-dataset.dropna()
+
 for col in object_cols:
   unique_values.append(dataset[col].unique().size)
 plt.figure(figsize=(10,6))
@@ -184,9 +168,4 @@ model_RFR = RandomForestRegressor(n_estimators=15)
 model_RFR.fit(X_train, Y_train)
 Y_pred = model_RFR.predict(X_valid)
 
-
-
-
-
- 
 print(mean_absolute_percentage_error(Y_valid, Y_pred))

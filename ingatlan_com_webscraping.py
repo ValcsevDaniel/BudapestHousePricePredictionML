@@ -45,7 +45,7 @@ def scrape_specific_house(url, dr,bs):
     
     
     
-    time.sleep(2)
+    time.sleep(3)
     tables = bs.find_all("table" , {"col col-print-6 table table-borderless h-100 w-50 border-end border-1"})
     specs = {}
     for table in tables:
@@ -137,6 +137,7 @@ def scrape_single_page(url):
         url = "https://ingatlan.com{ending}".format(ending=url_end)
         
         dr.get(url)
+        time.sleep(3)
         bs = BeautifulSoup(dr.page_source,"lxml")
         temp = scrape_specific_house(url, dr, bs)
         temp_dict = housing[count_specifics]
@@ -152,14 +153,14 @@ def scrape_single_page(url):
     return df
 frames = []
 
-for i in range(1,2):
-    frame = scrape_single_page(f"https://ingatlan.com/lista/elado+lakas+xiv-ker?page={i}")
+for i in range(1,100):
+    frame = scrape_single_page(f"https://ingatlan.com/lista/elado+lakas+vii-ker?page={i}")
     frames.append(frame)
 result = pd.concat(frames)
 result_copy = result
 result_copy = result.reset_index().drop('index', axis=1)
 
-result_copy.to_csv('Ingatlanok.csv', index=False)
+result_copy.to_csv('Ingatlanok3.csv', index=False)
 
 
 
