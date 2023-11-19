@@ -20,12 +20,11 @@ from sklearn.metrics import mean_absolute_percentage_error
 import numpy as np
 #Formatting the data
 
+
 dataset = pd.read_csv("ZugloiIngatlanok.csv")
-dataset_5 = pd.read_csv("Ingatlanok3.csv")
-dataset = pd.concat([dataset,dataset_5],axis=0)
-#remove unneccessary data
-dataset = dataset.drop(['adress','Parkolóhely ára','Panelprogram'],axis=1)
-dateset = dataset.drop(dataset.columns[[0]], axis=1)
+
+
+#dataset.to_csv("elso_masodik_harmadik_negyedik_otodik_hetedik_tizzenegyedig.csv", index=False)
 
 HAS_ENCODING_FOR_AC = {
     "van" : True,
@@ -99,7 +98,6 @@ def Inner_Height_Parser(x):
 threshold = 0.01 * len(dataset)
 filtered_dataset = dataset.dropna(thresh=len(dataset) - threshold, axis=1)
 dataset = filtered_dataset
-dataset.drop(['Közös költség'], axis=1,inplace=True)
 dataset.dropna(inplace=True)
 
 

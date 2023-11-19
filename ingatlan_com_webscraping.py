@@ -14,6 +14,8 @@ import time
 import undetected_chromedriver as uc
 import re
 from seleniumbase import Driver
+from datetime import datetime
+
 
 url = "https://ingatlan.com/33574491"
 def number_of_half_rooms(str):
@@ -152,15 +154,20 @@ def scrape_single_page(url):
     df = pd.DataFrame(housing).T
     return df
 frames = []
-
-for i in range(1,100):
-    frame = scrape_single_page(f"https://ingatlan.com/lista/elado+lakas+vii-ker?page={i}")
+beginning_time = datetime.now()
+print(beginning_time)
+for i in range(1,99):
+    print("Current Page: ", i)
+    frame = scrape_single_page(f"https://ingatlan.com/lista/elado+lakas+vi-ker?page={i}")
     frames.append(frame)
 result = pd.concat(frames)
 result_copy = result
 result_copy = result.reset_index().drop('index', axis=1)
 
-result_copy.to_csv('Ingatlanok3.csv', index=False)
+result_copy.to_csv('hatodik_ker.csv', index=False)
+end = datetime.now()
+print("The program took : " , end - beginning_time)
+
 
 
 
