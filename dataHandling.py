@@ -21,8 +21,11 @@ import numpy as np
 #Formatting the data
 
 
-dataset = pd.read_csv("ZugloiIngatlanok.csv")
+dataset = pd.read_csv("elso_masodik_harmadik_negyedik_otodik_hetedik_tizzenegyedig.csv")
 
+selected_columns = ['price', 'size', 'rooms', 'half_rooms',
+                     'Ingatlan állapota', 'Építés éve', 'Komfort', 'Tájolás', 'Kilátás']
+dataset = dataset[selected_columns]
 
 #dataset.to_csv("elso_masodik_harmadik_negyedik_otodik_hetedik_tizzenegyedig.csv", index=False)
 
@@ -93,12 +96,13 @@ def Inner_Height_Parser(x):
             return math.nan
     except:
         pass
-
+dataset['Építés éve'] = dataset['Építés éve'].apply(lambda x : Building_Year_Parse(x))
 
 threshold = 0.01 * len(dataset)
 filtered_dataset = dataset.dropna(thresh=len(dataset) - threshold, axis=1)
 dataset = filtered_dataset
 dataset.dropna(inplace=True)
+print(dataset.columns)
 
 
 obj = (dataset.dtypes == 'object')
@@ -162,7 +166,7 @@ Y_pred = model_SVR.predict(X_valid)
  
 print(mean_absolute_percentage_error(Y_valid, Y_pred))
 
-model_RFR = RandomForestRegressor(n_estimators=15)
+model_RFR = RandomForestRegressor(n_estimators=35)
 model_RFR.fit(X_train, Y_train)
 Y_pred = model_RFR.predict(X_valid)
 
