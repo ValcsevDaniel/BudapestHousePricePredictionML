@@ -17,8 +17,6 @@ whether or not for example the building has an elevator I assume that it is beac
 
 ## ML algorithm 
 
-Due to the fact that this is a regression problem and I have structured data I experimented with some ensemble methods and found that so far RandomForestRegressor delivered the best 
-result for my problem. It achieved a score of **0.81** which I consider quite good considering the fact that the price of a house depends on complex variables that can not be displayed 
-in an online advertisement. 
+Due to the fact that this is a regression problem and I have structured data I experimented with some ensemble methods.
 
 
