@@ -156,15 +156,15 @@ def scrape_single_page(url):
 frames = []
 beginning_time = datetime.now()
 print(beginning_time)
-for i in range(1,100):
+for i in range(100,200):
     print("Current Page: ", i)
-    frame = scrape_single_page(f"https://ingatlan.com/lista/elado+lakas+xi-ker?page={i}")
+    frame = scrape_single_page(f"https://ingatlan.com/lista/elado+lakas+xiii-ker?page={i}")
     frames.append(frame)
 result = pd.concat(frames)
 result_copy = result
 result_copy = result.reset_index().drop('index', axis=1)
 
-result_copy.to_csv('tizenegyedik_ker_elso.csv', index=False)
+result_copy.to_csv('tizenharmadik_ker_masodik.csv', index=False)
 end = datetime.now()
 print("The program took : " , end - beginning_time)
 
