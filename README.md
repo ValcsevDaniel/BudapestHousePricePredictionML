@@ -18,7 +18,6 @@ whether or not for example the building has an elevator I assume that it is beac
 
 ## ML algorithm 
 
-Due to the fact that this is a regression problem and I have structured data I experimented with some ensemble methods. Using RandomForestRegressor, I have achieved **99.1%** accuarcy *(training on the first 14 districts in budapest, the score is a mean value of the cross validated accuracy)*.
-
+Due to the fact that this is a regression problem and I have structured data I experimented with some ensemble methods. Using RandomForestRegressor, I have achieved **82%** accuarcy *(on r2 score)* and **70%** accuracy on my cross validation mean score.
 
 
