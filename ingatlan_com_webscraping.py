@@ -40,14 +40,14 @@ def get_all_house_details(bs):
                 individual_houses.append(house_detail.string)
     return individual_houses
 def cookie_accept(dr):
-    time.sleep(2)
+    time.sleep(1)
     dr.find_element(By.ID, "CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click()
  
 def scrape_specific_house(url, dr,bs):
     
     
     
-    time.sleep(3)
+    time.sleep(1)
     tables = bs.find_all("table" , {"col col-print-6 table table-borderless h-100 w-50 border-end border-1"})
     specs = {}
     for table in tables:
@@ -154,6 +154,11 @@ def scrape_single_page(url):
     df = pd.DataFrame(housing).T
     return df
 frames = []
+
+
+for i in range(1,100):
+    frame = scrape_single_page(f"https://ingatlan.com/lista/elado+lakas+i-ker+ii-ker?page={i}")
+
 beginning_time = datetime.now()
 print(beginning_time)
 for i in range(100,200):
@@ -167,6 +172,7 @@ result_copy = result.reset_index().drop('index', axis=1)
 result_copy.to_csv('tizenharmadik_ker_masodik.csv', index=False)
 end = datetime.now()
 print("The program took : " , end - beginning_time)
+
 
 
 
