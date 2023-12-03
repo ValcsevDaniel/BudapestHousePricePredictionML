@@ -11,12 +11,14 @@ The data is collected using the `ingatlan_com_webscraping.py` script, due to the
 ## Data processing 
 
 I have reduced the number of features, the script collects 31 features for each house including things like insulation, AC unit, Utility pricing etc. however a significant number of houses
-on *ingatlan.com* have missing features, therefore I decided to reduce the number of features to the most important ones, and the ones that are more available. In some cases 
-I worked on the assumption that a person who is listing their house for sale would display all of the beneficial information in the advertisement, therefore if they did not specify
+on *ingatlan.com* have missing features, therefore I decided to reduce the number of features to the most important ones, and the ones that are more available. 
+
+In some cases, I worked on the assumption that a person who is listing their house for sale would display all of the beneficial information in the advertisement, therefore if they did not specify
 whether or not for example the building has an elevator I assume that it is beacuse it does not have one. 
 
 ## ML algorithm 
 
-Due to the fact that this is a regression problem and I have structured data I experimented with some ensemble methods.
+Due to the fact that this is a regression problem and I have structured data I experimented with some ensemble methods. Using RandomForestRegressor, I have achieved **99.1%** accuarcy *(training on the first 14 districts in budapest, the score is a mean value of the cross validated accuracy)*.
+
 
 
